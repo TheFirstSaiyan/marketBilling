@@ -148,51 +148,35 @@ while not(number==0):
 
   name=str(input("enter name of product"))
 
-  quantity=int(input("enter quantity"))
 
+  count=0
   for some in D.keys():
 
-    if (name==some):
+   if (name==some):
 
-     if(name=='soap'):
+     count+=1
 
-      soap=Product()
+  if(count>0):
 
-      if(soap.checkStock(name)):
+        quantity = int(input("enter quantity"))
 
-         soap.findtotal(name,quantity)
+        s=Product()
 
-     elif(name=="noodles"):
+        if(s.checkStock(name)):
 
-         noodles=Product()
+         s.findtotal(name,quantity)
 
-         if(noodles.checkStock(name)):
+  else:
+        print("not available...\n")
 
-             noodles.findtotal(name,quantity)
+        yesorno = str(input("do u wish to add it..\n type Y for Yes\ntype N for No"))
+        if (yesorno == "Y"):
+            q = int(input("enter quantity"))
 
-     elif (name == "chocolate"):
+            c = int(input("enter cost per item"))
 
-         chocolate= Product()
+            addProduct(name, q, c)
 
-         if (chocolate.checkStock(name)):
-
-             chocolate.findtotal(name,quantity)
-
-     elif (name == "rice"):
-
-         rice = Product()
-
-         if (rice.checkStock(name)):
-
-             rice.findtotal(name,quantity)
-
-     elif (name == "oil"):
-
-         oil= Product()
-
-         if (oil.checkStock(name)):
-
-             oil.findtotal(name,quantity)
 
  if(number==2 ):
 
