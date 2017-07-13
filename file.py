@@ -2,18 +2,31 @@ import sys
 import os
 import csv
 
-file = open("itemlist.csv", "r")
-
-reader = csv.reader(file)
-
 D = {}
+def readFromFile():
+ file = open("itemlist.csv", "r")
+ reader = csv.reader(file)
 
-for row in reader:
+
+ for row in reader:
     D["%s" % row[0]] = {"quantity": row[1], "cost": row[2]}
+ file.close()
+
+def updateFile():
+          with open("itemlist.csv", 'w') as file:
+              for k, v in D.items():
+                  file.write(str(k))
+                  for item in v:
+                      file.write("," + str(D[k][item]))
+                  file.write("\n")
+
+          file.close()
 
 def addProduct(name2,quantity2,cost2):
 
     D[name2] = {"quantity":quantity2,"cost":cost2}
+
+    updateFile()
 
     print(D)
 
@@ -31,6 +44,8 @@ def deleteProduct(name):
     if(count>0):
 
         del D[name]
+
+        updateFile()
 
         print(D)
 
@@ -84,6 +99,8 @@ def update(name):
 
         D[name]["cost"]=cost
 
+        updateFile()
+
         print(D)
     else:
         print("not available...\n")
@@ -118,6 +135,8 @@ class Product:
 
             D[name]["quantity"]=0
 
+            updateFile()
+
         else:
 
             D[name]["quantity"]=int(D[name]["quantity"])-quantity
@@ -125,6 +144,8 @@ class Product:
             Product.total = Product.total+quantity*int(D[name]["cost"])
 
             print("total", Product.total)
+
+            updateFile()
 
 
 
@@ -139,7 +160,7 @@ class Product:
 
             return 0
 
-
+readFromFile()
 number = int(input("enter :\n1 to bill an item\n2 to add an item\n3 to check if an item is available\n4 to remove an item\n5 to update quantity and stock\n0 to exit\n "))
 
 while not(number==0):
